@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
     "target": "es6",
+    "rootDir": "extension",
     "outDir": "./built",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "resolveJsonModule": true,
+    "noEmitOnError": true,
     "strict": true,
-    "allowJs": false
-  },
-  "include": ["./extension/**/*"],
+    "allowJs": false,
+    "sourceMap": false,
+    "typeRoots": [ "node_modules/@types" ]
+  }
 }

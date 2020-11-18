@@ -20,6 +20,7 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "semi": ["error", "never"],
+    "default-case": "off",
     "no-await-in-loop": "off",
     "no-restricted-syntax": "off",
     "no-continue": "off",
