@@ -1,0 +1,11 @@
+{
+  "name": "code-tours-github",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  }
+}

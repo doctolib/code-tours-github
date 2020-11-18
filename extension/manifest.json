@@ -1,0 +1,15 @@
+{
+  "name": "Code tours Github",
+  "version": "0.0.1",
+  "description": "Allows to run code tours in your browser",
+  "manifest_version": 2,
+  "minimum_chrome_version": "60",
+  "permissions": ["https://github.com/*"],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["https://github.com/*/*"],
+      "js": ["github.js"]
+    }
+  ]
+}
