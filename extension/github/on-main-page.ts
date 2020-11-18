@@ -4,7 +4,12 @@ export function onMainPage(): void {
   console.log(codeTourFolderUrl)
 
   const codeTourButton = document.createElement('a')
+  codeTourButton.classList.add('btn')
+  codeTourButton.classList.add('ml-2')
+  codeTourButton.classList.add('d-none')
+  codeTourButton.classList.add('d-md-block')
   codeTourButton.setAttribute('href', codeTourFolderUrl)
+  codeTourButton.innerHTML = 'Code Tours'
 
-  document.querySelector('ul.pagehead-actions')?.prepend(codeTourButton)
+  document.querySelector('.file-navigation')?.insertBefore(codeTourButton, document.querySelector('a[data-hotkey="t"]'))
 }
