@@ -24,13 +24,16 @@ export function onCodeTourList(): void {
     const name = /^(.*).tour$/.exec(title)?.[1]
     if (!name) return
 
+    const prettyName = name.replace(/-/g, ' ').replace(/\s/g, ' ')
+
     const tourContent: CodeTour = {
       ...(await fetch(href.replace('blob', 'raw')).then((response) => response.json())),
       repository: currentRepository,
     } as CodeTour
 
     const newChild = document.createElement('a')
-    newChild.innerHTML = 'RUN'
+    newChild.classList.add('btn')
+    newChild.innerHTML = `Learn ${prettyName}`
     newChild.onclick = async () => {
       const result = await forwardRequest({ action: 'START', codeTour: tourContent })
       executeOrder(result)
