@@ -21,16 +21,18 @@ function getPageType(): PageType {
 function main(): void {
   switch (getPageType()) {
     case PageType.RepositoryMainPage: {
-      // TODO
+      console.log('main')
       return onMainPage()
     }
     case PageType.CodeTourInProgress: {
-      return addCodeTour()
+      void addCodeTour()
+      return undefined
     }
     case PageType.CodeTourDirectory: {
       return onCodeTourList()
     }
   }
+  console.log('nowhere')
   return undefined
 }
 

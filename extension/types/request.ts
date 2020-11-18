@@ -1,7 +1,4 @@
-export interface CodeTour {
-  title: string
-  step: number
-}
+import { CodeTour } from './code-tour'
 
 export interface StartRequest {
   action: 'START'
@@ -13,4 +10,10 @@ export interface GoToRequest {
   codeTour: CodeTour
 }
 
-export type Request = StartRequest | GoToRequest
+export interface GetStepRequest {
+  action: 'GET_STEP'
+  codeTourTitle: string
+  codeTourStep: number
+}
+
+export type Request = StartRequest | GoToRequest | GetStepRequest

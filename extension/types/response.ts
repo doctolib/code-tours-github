@@ -1,6 +1,13 @@
-export interface Redirect {
+import { EnhancedCodeTourStep } from './code-tour'
+
+export interface RedirectResponse {
   action: 'REDIRECT'
   url: string
 }
 
-export type Response = Redirect
+export interface StepResponse {
+  action: 'STEP'
+  step: EnhancedCodeTourStep
+}
+
+export type Response = RedirectResponse | StepResponse

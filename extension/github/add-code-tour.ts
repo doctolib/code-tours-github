@@ -1,40 +1,39 @@
-interface Step {
-  line: number
-  description: string
-  nextUrl?: string
-  previousUrl?: string
+import { forwardRequest } from './forward-request'
+import { EnhancedCodeTourStep } from '../types/code-tour'
+
+async function getStep(title: string, step: number): Promise<EnhancedCodeTourStep> {
+  const response = await forwardRequest({ action: 'GET_STEP', codeTourStep: step, codeTourTitle: title })
+  if (response.action !== 'STEP') throw new Error('should return a step')
+  return response.step
 }
 
-function getStep(name: string, step: number): Step {
-  return {
-    line: step,
-    description: name,
-  }
-}
-
-export function addCodeTour(): void {
+export async function addCodeTour(): Promise<void> {
+  console.log('ADDING CODE TOUR')
   const searchParams = new URLSearchParams(window.location.search)
   const name = searchParams.get('code-tour')
   const step = parseInt(searchParams.get('step') ?? '', 10) || 0
 
   if (!name) return
 
-  const currentStep = getStep(name, step)
+  const currentStep = await getStep(name, step)
+  console.log(step)
   const currentLine = currentStep.line
   const currentDescription = currentStep.description
+  const previousButton = currentStep.previousUrl ? `<a href="${currentStep.previousUrl}">Previous</a>` : ''
   const nextButton = currentStep.nextUrl ? `<a href="${currentStep.nextUrl}">Next</a>` : ''
-  const previousButton = currentStep.previousUrl ? `<a href="${currentStep.previousUrl}">Next</a>` : ''
 
   const section = document.createElement('div')
   section.setAttribute('class', 'dl-doctolib-code-tour-comment')
-  section.appendChild(document.createTextNode(`${currentDescription}<br/>${previousButton} ${nextButton}`))
-  section.append(`
-    <style>
+  section.innerHTML = `${currentDescription}<br/>${previousButton} ${nextButton}`
+  section.setAttribute(
+    'style',
+    `
     .dl-doctolib-code-tour-comment {
       padding: 14px;
       margin: 14px;
       background-color: white;
     }
-    </style>`)
+    `,
+  )
   document.querySelector(`#LC${currentLine}.blob-code`)?.append(section)
 }

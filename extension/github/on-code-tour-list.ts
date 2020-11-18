@@ -1,16 +1,9 @@
-import { CodeTour, Request } from '../types/request'
 import { Response } from '../types/response'
-
-function forwardRequest(request: Request): Promise<Response> {
-  return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(request, (response: Response) => {
-      if (!response) return reject(chrome.runtime.lastError)
-      return resolve(response)
-    })
-  })
-}
+import { CodeTour } from '../types/code-tour'
+import { forwardRequest } from './forward-request'
 
 function executeOrder(order: Response): void {
+  console.log(order)
   switch (order.action) {
     case 'REDIRECT':
       window.location.href = order.url
@@ -19,17 +12,22 @@ function executeOrder(order: Response): void {
 }
 
 export function onCodeTourList(): void {
+  const currentRepositoryMatches = /^\/([^/]+\/[^/]+)\//.exec(window.location.pathname)
+  if (!currentRepositoryMatches) return
+
+  const currentRepository = currentRepositoryMatches[1]
+
   document.querySelectorAll('div[role=row] > div[role="rowheader"] > span > a').forEach(async (value: Element) => {
     const title = value.getAttribute('title')
     const href = value.getAttribute('href')
     if (!title || !href) return
-    console.log(title)
     const name = /^(.*).tour$/.exec(title)?.[1]
     if (!name) return
 
-    const tourContent: CodeTour = (await fetch(href.replace('blob', 'raw')).then((response) =>
-      response.json(),
-    )) as CodeTour
+    const tourContent: CodeTour = {
+      ...(await fetch(href.replace('blob', 'raw')).then((response) => response.json())),
+      repository: currentRepository,
+    } as CodeTour
 
     const newChild = document.createElement('a')
     newChild.innerHTML = 'RUN'
