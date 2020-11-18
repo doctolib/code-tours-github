@@ -1,6 +1,6 @@
-import { CodeTour, Request } from './request'
+import { CodeTour, Request } from '../types/request'
+import { Response } from '../types/response'
 import MessageSender = chrome.runtime.MessageSender
-import { Response } from './response'
 
 const codeTourMap: Record<string, CodeTourGenerator> = {}
 
@@ -8,7 +8,7 @@ class CodeTourGenerator {
   constructor(private body: CodeTour) {}
 
   goTo(step: number): string {
-    return step < 0 ? 'https://github.com/doctolib/doctolib/blob/master/.tours/concerns.tour' : ''
+    return this.body && step < 0 ? 'https://github.com/doctolib/doctolib/blob/master/.tours/concerns.tour' : ''
   }
 }
 

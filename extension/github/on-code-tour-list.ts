@@ -1,5 +1,5 @@
-import { CodeTour, Request } from './request'
-import { Response } from './response'
+import { CodeTour, Request } from '../types/request'
+import { Response } from '../types/response'
 
 function forwardRequest(request: Request): Promise<Response> {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ function forwardRequest(request: Request): Promise<Response> {
   })
 }
 
-function executeOrder(order: Response) {
+function executeOrder(order: Response): void {
   switch (order.action) {
     case 'REDIRECT':
       window.location.href = order.url
@@ -18,17 +18,10 @@ function executeOrder(order: Response) {
   }
 }
 
-function onMainPage() {
-  const currentUrl = window.location.pathname
-  const codeTourFolderUrl = `${currentUrl}/tree/master/.tours`
-
-  console.log(document.querySelector(`a[href="${codeTourFolderUrl}"]`))
-}
-
-function onCodeTourList() {
+export function onCodeTourList(): void {
   document.querySelectorAll('div[role=row] > div[role="rowheader"] > span > a').forEach(async (value: Element) => {
-    let title = value.getAttribute('title')
-    let href = value.getAttribute('href')
+    const title = value.getAttribute('title')
+    const href = value.getAttribute('href')
     if (!title || !href) return
     console.log(title)
     const name = /^(.*).tour$/.exec(title)?.[1]
@@ -49,12 +42,3 @@ function onCodeTourList() {
     row.insertBefore(newChild, null)
   })
 }
-
-function main() {
-  const currentUrl = window.location.pathname
-  if (currentUrl.endsWith('.tours')) return onCodeTourList()
-  // TODO handle any other page :joy:
-  return onMainPage()
-}
-
-setTimeout(main, 1000)
