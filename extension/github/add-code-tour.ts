@@ -21,7 +21,6 @@ export async function addCodeTour(): Promise<void> {
   if (!name) return
 
   const currentStep = await getStep(name, step)
-  console.log(step)
   const currentLine = currentStep.line
   const currentDescription = currentStep.description
   const previousButton = buttonTo('Previous', currentStep.previousUrl)
@@ -39,5 +38,11 @@ export async function addCodeTour(): Promise<void> {
       background-color: white;
     `,
   )
-  document.querySelector(`#LC${currentLine}.blob-code`)?.append(section)
+
+  const parent = document.querySelector(`#LC${currentLine}.blob-code`)
+  if (!parent) return
+
+  parent.append(section)
+  parent.classList.add('highlighted')
+  parent.scrollIntoView({ behavior: 'auto', block: 'center' })
 }
