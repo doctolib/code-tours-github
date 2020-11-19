@@ -16,4 +16,9 @@ export interface GetStepRequest {
   codeTourStep: number
 }
 
-export type Request = StartRequest | GoToRequest | GetStepRequest
+export interface GetCodeTour {
+  action: 'GET_CODE_TOUR'
+  url: string
+}
+
+export type Request = StartRequest | GoToRequest | GetStepRequest | GetCodeTour

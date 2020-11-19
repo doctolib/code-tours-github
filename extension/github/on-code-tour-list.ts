@@ -3,7 +3,6 @@ import { CodeTour } from '../types/code-tour'
 import { forwardRequest } from './forward-request'
 
 function executeOrder(order: Response): void {
-  console.log(order)
   switch (order.action) {
     case 'REDIRECT':
       window.location.href = order.url
@@ -35,8 +34,12 @@ export function onCodeTourList(): void {
 
         const prettyName = name.replace(/-/g, ' ').replace(/\s/g, ' ')
 
+        const codeTourUrl = href.replace('blob', 'raw')
+        const response = await forwardRequest({ action: 'GET_CODE_TOUR', url: codeTourUrl })
+        if (response.action !== 'CODE_TOUR' || !response.codeTour) return undefined
+
         const tourContent: CodeTour = {
-          ...(await fetch(href.replace('blob', 'raw')).then((response) => response.json())),
+          ...response.codeTour,
           repository: currentRepository,
         } as CodeTour
 

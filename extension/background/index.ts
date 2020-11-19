@@ -41,12 +41,11 @@ class CodeTourGenerator {
   }
 }
 
-chrome.runtime.onMessage.addListener(function (
+chrome.runtime.onMessage.addListener(async function (
   request: Request,
   sender: MessageSender,
   sendResponse: (answer: Response) => void,
 ) {
-  console.log(request)
   switch (request.action) {
     case 'START':
       codeTourMap[request.codeTour.title] = new CodeTourGenerator(request.codeTour)
@@ -61,6 +60,14 @@ chrome.runtime.onMessage.addListener(function (
       const step = codeTourMap[request.codeTourTitle]?.getStep(request.codeTourStep)
       if (!step) return
       sendResponse({ action: 'STEP', step })
+      break
+    }
+    case 'GET_CODE_TOUR': {
+      const codeTourContent = (await fetch(`https://github.com${request.url}`, {
+        credentials: 'include',
+      }).then((response) => response.json())) as CodeTour
+      sendResponse({ action: 'CODE_TOUR', codeTour: codeTourContent })
+      break
     }
   }
 })
