@@ -2,7 +2,7 @@
   "name": "code-tours-github",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --config webpack.config.js && cp manifest.json built/",
+    "build": "webpack --config webpack.config.js && cp manifest.json code-tour.png built/",
     "clean": "rimraf built"
   },
   "dependencies": {},

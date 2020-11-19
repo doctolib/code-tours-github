@@ -8,6 +8,9 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "icons": {
+    "128": "code-tour.png"
+  },
   "content_scripts": [
     {
       "run_at": "document_start",
