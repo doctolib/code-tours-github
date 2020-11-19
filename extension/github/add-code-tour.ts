@@ -7,6 +7,11 @@ async function getStep(title: string, step: number): Promise<EnhancedCodeTourSte
   return response.step
 }
 
+function buttonTo(text: string, url?: string) {
+  const classes = url ? 'btn' : 'btn disabled'
+  return `<a class="${classes}" style="margin-top: 10px;" href="${url || ''}">${text}</a>`
+}
+
 export async function addCodeTour(): Promise<void> {
   console.log('ADDING CODE TOUR')
   const searchParams = new URLSearchParams(window.location.search)
@@ -19,20 +24,19 @@ export async function addCodeTour(): Promise<void> {
   console.log(step)
   const currentLine = currentStep.line
   const currentDescription = currentStep.description
-  const previousButton = currentStep.previousUrl ? `<a href="${currentStep.previousUrl}">Previous</a>` : ''
-  const nextButton = currentStep.nextUrl ? `<a href="${currentStep.nextUrl}">Next</a>` : ''
+  const previousButton = buttonTo('Previous', currentStep.previousUrl)
+  const nextButton = buttonTo('Next', currentStep.nextUrl)
 
   const section = document.createElement('div')
   section.setAttribute('class', 'dl-doctolib-code-tour-comment')
-  section.innerHTML = `${currentDescription}<br/>${previousButton} ${nextButton}`
+
+  section.innerHTML = `<span>${currentDescription}</span><br/>${previousButton} ${nextButton}`
   section.setAttribute(
     'style',
     `
-    .dl-doctolib-code-tour-comment {
       padding: 14px;
       margin: 14px;
       background-color: white;
-    }
     `,
   )
   document.querySelector(`#LC${currentLine}.blob-code`)?.append(section)
