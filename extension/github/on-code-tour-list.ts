@@ -11,35 +11,60 @@ function executeOrder(order: Response): void {
   }
 }
 
+interface Operation {
+  row: Node & ParentNode
+  newChild: HTMLAnchorElement
+}
+
 export function onCodeTourList(): void {
   const currentRepositoryMatches = /^\/([^/]+\/[^/]+)\//.exec(window.location.pathname)
   if (!currentRepositoryMatches) return
 
   const currentRepository = currentRepositoryMatches[1]
 
-  document.querySelectorAll('div[role=row] > div[role="rowheader"] > span > a').forEach(async (value: Element) => {
-    const title = value.getAttribute('title')
-    const href = value.getAttribute('href')
-    if (!title || !href) return
-    const name = /^(.*).tour$/.exec(title)?.[1]
-    if (!name) return
+  const insertPreparation = Array.from(
+    document.querySelectorAll('div[role=row] > div[role="rowheader"] > span > a').values(),
+  ).map(
+    async (parentElement: Element): Promise<Operation | undefined> => {
+      try {
+        const title = parentElement.getAttribute('title')
+        const href = parentElement.getAttribute('href')
+        if (!title || !href) return undefined
+        const name = /^(.*).tour$/.exec(title)?.[1]
+        if (!name) return undefined
 
-    const prettyName = name.replace(/-/g, ' ').replace(/\s/g, ' ')
+        const prettyName = name.replace(/-/g, ' ').replace(/\s/g, ' ')
 
-    const tourContent: CodeTour = {
-      ...(await fetch(href.replace('blob', 'raw')).then((response) => response.json())),
-      repository: currentRepository,
-    } as CodeTour
+        const tourContent: CodeTour = {
+          ...(await fetch(href.replace('blob', 'raw')).then((response) => response.json())),
+          repository: currentRepository,
+        } as CodeTour
 
-    const newChild = document.createElement('a')
-    newChild.classList.add('btn')
-    newChild.innerHTML = `Learn ${prettyName}`
-    newChild.onclick = async () => {
-      const result = await forwardRequest({ action: 'START', codeTour: tourContent })
-      executeOrder(result)
-    }
-    const row = value?.parentNode?.parentNode
-    if (!row) return
-    row.insertBefore(newChild, null)
+        const newChild = document.createElement('a')
+        newChild.classList.add('btn')
+        newChild.innerHTML = `Learn ${prettyName}`
+        newChild.onclick = async () => {
+          const result = await forwardRequest({ action: 'START', codeTour: tourContent })
+          executeOrder(result)
+        }
+        const row = parentElement.parentNode?.parentNode
+        if (!row) return undefined
+        return {
+          row,
+          newChild,
+        }
+      } catch (error) {
+        // no code tour for you!
+        return undefined
+      }
+    },
+  )
+
+  void Promise.all(insertPreparation).then((operations) => {
+    operations.forEach((operation) => {
+      if (!operation) return
+      const { newChild, row } = operation
+      row.append(newChild)
+    })
   })
 }
