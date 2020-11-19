@@ -4,7 +4,6 @@
   "description": "Allows to run code tours in your browser",
   "manifest_version": 2,
   "minimum_chrome_version": "60",
-  "permissions": ["https://github.com/*"],
   "background": {
     "scripts": ["background.js"]
   },
