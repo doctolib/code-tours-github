@@ -21,7 +21,6 @@ function getPageType(): PageType {
 function main(): void {
   switch (getPageType()) {
     case PageType.RepositoryMainPage: {
-      console.log('main')
       return onMainPage()
     }
     case PageType.CodeTourInProgress: {
@@ -32,7 +31,6 @@ function main(): void {
       return onCodeTourList()
     }
   }
-  console.log('nowhere')
   return undefined
 }
 

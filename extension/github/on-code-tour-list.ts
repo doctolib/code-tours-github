@@ -36,6 +36,7 @@ export function onCodeTourList(): void {
 
         const codeTourUrl = href.replace('blob', 'raw')
         const response = await forwardRequest({ action: 'GET_CODE_TOUR', url: codeTourUrl })
+        console.log(response)
         if (response.action !== 'CODE_TOUR' || !response.codeTour) return undefined
 
         const tourContent: CodeTour = {
@@ -57,6 +58,7 @@ export function onCodeTourList(): void {
           newChild,
         }
       } catch (error) {
+        console.log(error)
         // no code tour for you!
         return undefined
       }

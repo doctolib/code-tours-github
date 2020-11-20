@@ -13,7 +13,6 @@ function buttonTo(text: string, url?: string) {
 }
 
 export async function addCodeTour(): Promise<void> {
-  console.log('ADDING CODE TOUR')
   const searchParams = new URLSearchParams(window.location.search)
   const name = searchParams.get('code-tour')
   const step = parseInt(searchParams.get('step') ?? '', 10) || 0

@@ -16,8 +16,6 @@ class CodeTourGenerator {
   }
 
   getStep(stepId: number): EnhancedCodeTourStep {
-    console.log(stepId)
-    console.log(this.body)
     const requestedStep = this.body.steps[stepId]
     if (!requestedStep) throw new Error('step does not exist')
 
@@ -41,33 +39,33 @@ class CodeTourGenerator {
   }
 }
 
-chrome.runtime.onMessage.addListener(async function (
+chrome.runtime.onMessage.addListener(function (
   request: Request,
   sender: MessageSender,
   sendResponse: (answer: Response) => void,
-) {
+): boolean {
   switch (request.action) {
     case 'START':
       codeTourMap[request.codeTour.title] = new CodeTourGenerator(request.codeTour)
       sendResponse({ action: 'REDIRECT', url: codeTourMap[request.codeTour.title].goTo(0) })
       break
     case 'GO_TO':
-      if (!codeTourMap[request.codeTour.title]) return
-      if (!request.codeTour.step) return
+      if (!codeTourMap[request.codeTour.title]) return false
+      if (!request.codeTour.step) return false
       sendResponse({ action: 'REDIRECT', url: codeTourMap[request.codeTour.title].goTo(request.codeTour.step) })
       break
     case 'GET_STEP': {
       const step = codeTourMap[request.codeTourTitle]?.getStep(request.codeTourStep)
-      if (!step) return
+      if (!step) return false
       sendResponse({ action: 'STEP', step })
       break
     }
     case 'GET_CODE_TOUR': {
-      const codeTourContent = (await fetch(`https://github.com${request.url}`, {
-        credentials: 'include',
-      }).then((response) => response.json())) as CodeTour
-      sendResponse({ action: 'CODE_TOUR', codeTour: codeTourContent })
-      break
+      void fetch(`https://github.com${request.url}`)
+        .then((response) => response.json())
+        .then((codeTourContent: CodeTour) => sendResponse({ action: 'CODE_TOUR', codeTour: codeTourContent }))
+      return true
     }
   }
+  return false
 })
