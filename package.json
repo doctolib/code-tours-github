@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --config webpack.config.js && cp manifest.json code-tour.png built/",
+    "package": "(cd built ; zip -r ../extension.zip .)",
     "clean": "rimraf built"
   },
   "dependencies": {},
