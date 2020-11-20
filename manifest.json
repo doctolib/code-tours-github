@@ -7,6 +7,7 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "permissions": ["https://render.githubusercontent.com/*", "https://github.com/*"],
   "icons": {
     "128": "code-tour.png"
   },
