@@ -1,7 +1,9 @@
 export function onMainPage(): void {
-  const currentUrl = window.location.pathname
-  const codeTourFolderUrl = `${currentUrl}/tree/master/.tours`
-  console.log(codeTourFolderUrl)
+  const node = document.querySelector('a[href$="/.tours"]')
+  if (!node) return
+
+  const codeTourFolderUrl = node.getAttribute('href')
+  if (!codeTourFolderUrl) return
 
   const codeTourButton = document.createElement('a')
   codeTourButton.classList.add('btn')

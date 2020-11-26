@@ -14,7 +14,11 @@ function getPageType(): PageType {
   if (urlParams.get('code-tour')) return PageType.CodeTourInProgress
   const currentUrl = window.location.pathname
   if (currentUrl.endsWith('.tours')) return PageType.CodeTourDirectory
-  if (/^\/[^/]+\/[^/]+$/.test(currentUrl)) return PageType.RepositoryMainPage
+
+  const node = document.querySelector('a[href$="/.tours"]')
+  if (node && node.getAttribute('href')) return PageType.RepositoryMainPage
+
+  if (/^\/[^/]+\/[^/]+\/?$/.test(currentUrl)) return PageType.RepositoryMainPage
   return PageType.NoWhere
 }
 
