@@ -5,7 +5,7 @@
     {
       "file": "manifest.json",
       "line": 2,
-      "description": "The manifest file describes the extension.\nIt is moved to the `built` folder when you build the extension.\nIt is used by _Chrome_ and _Firefox_ to understand how to load the extension.\n```\nThis is a json file\n```\n[Github repository](https://github.com/qmenoret/code-tours-github)\n\n[XSS injection](javascript:alert('xss'))"
+      "description": "The manifest file describes the extension.\nIt is moved to the `built` folder when you build the extension.\nIt is used by _Chrome_ and _Firefox_ to understand how to load the extension.\n```js\nfunction toto(a, b) {\n  return a + b\n}\n```\n[Github repository](https://github.com/qmenoret/code-tours-github)\n\n[XSS injection](javascript:alert('xss'))"
     },
     {
       "file": "manifest.json",
