@@ -9,3 +9,4 @@
 - [ ] Safari support
 - [ ] Check icon can be used
 - [ ] Design code tours
+- [ ] Support other default than "master"

@@ -1,8 +1,15 @@
-export interface CodeTourStep {
+interface CodeTourFileStep {
+  description: string
   file: string
   line: number
-  description: string
 }
+
+export interface CodeTourDirectoryStep {
+  description: string
+  directory: string
+}
+
+export type CodeTourStep = CodeTourFileStep | CodeTourDirectoryStep
 
 export type EnhancedCodeTourStep = CodeTourStep & {
   nextUrl?: string
