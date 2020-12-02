@@ -1,5 +1,10 @@
+import * as showdown from 'showdown'
+import { filterXSS } from 'xss'
 import { forwardRequest } from './forward-request'
 import { EnhancedCodeTourStep } from '../types/code-tour'
+
+const converter = new showdown.Converter()
+converter.setFlavor('github')
 
 async function getStep(title: string, step: number): Promise<EnhancedCodeTourStep> {
   const response = await forwardRequest({ action: 'GET_STEP', codeTourStep: step, codeTourTitle: title })
@@ -21,7 +26,7 @@ export async function addCodeTour(): Promise<void> {
 
   const currentStep = await getStep(name, step)
   const currentLine = currentStep.line
-  const currentDescription = currentStep.description
+  const currentDescription = filterXSS(converter.makeHtml(currentStep.description))
   const previousButton = buttonTo('Previous', currentStep.previousUrl)
   const nextButton = buttonTo('Next', currentStep.nextUrl)
 
