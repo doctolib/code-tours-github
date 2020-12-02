@@ -1,6 +1,6 @@
 {
   "name": "code-tours-github",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "scripts": {
     "build": "webpack --config webpack.config.js && cp manifest.json code-tour.png built/",
     "package": "(cd built ; zip -r ../extension.zip .)",
