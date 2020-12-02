@@ -1,6 +1,6 @@
 {
   "name": "Code tours Github",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allows to run code tours in your browser",
   "manifest_version": 2,
   "minimum_chrome_version": "60",
