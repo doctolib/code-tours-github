@@ -1,9 +1,10 @@
+import 'showdown-prettify'
 import * as showdown from 'showdown'
 import { filterXSS } from 'xss'
 import { forwardRequest } from './forward-request'
 import { EnhancedCodeTourStep } from '../types/code-tour'
 
-const converter = new showdown.Converter()
+const converter = new showdown.Converter({ extensions: ['prettify'] })
 converter.setFlavor('github')
 
 async function getStep(title: string, step: number): Promise<EnhancedCodeTourStep> {
@@ -18,6 +19,15 @@ function buttonTo(text: string, url?: string) {
 }
 
 export async function addCodeTour(): Promise<void> {
+  const sheet = document.createElement('style')
+  sheet.innerHTML = `
+  pre {
+    border: 1px black solid;
+    padding: 1em;
+  }
+  `
+  document.body.prepend(sheet)
+
   const searchParams = new URLSearchParams(window.location.search)
   const name = searchParams.get('code-tour')
   const step = parseInt(searchParams.get('step') ?? '', 10) || 0
