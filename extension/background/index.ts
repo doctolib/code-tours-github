@@ -12,9 +12,19 @@ class CodeTourGenerator {
     const newStep = this.body.steps[step]
     if (!newStep) throw new Error('Unknown step')
 
-    return `http://github.com/${this.body.repository}/blob/${this.body.ref || 'master'}/${
-      newStep.file
-    }?step=${step}&code-tour=${this.body.title}`
+    if ('file' in newStep && newStep.file) {
+      return `http://github.com/${this.body.repository}/blob/${this.body.ref || 'master'}/${
+        newStep.file
+      }?step=${step}&code-tour=${this.body.title}`
+    }
+
+    if ('directory' in newStep && newStep.directory) {
+      return `http://github.com/${this.body.repository}/tree/${this.body.ref || 'master'}/${
+        newStep.directory
+      }?step=${step}&code-tour=${this.body.title}`
+    }
+
+    throw new Error('Unknown step type')
   }
 
   getStep(stepId: number): EnhancedCodeTourStep {

@@ -35,7 +35,6 @@ export async function addCodeTour(): Promise<void> {
   if (!name) return
 
   const currentStep = await getStep(name, step)
-  const currentLine = currentStep.line
   const currentDescription = filterXSS(converter.makeHtml(currentStep.description))
   const previousButton = buttonTo('Previous', currentStep.previousUrl)
   const nextButton = buttonTo('Next', currentStep.nextUrl)
@@ -53,10 +52,17 @@ export async function addCodeTour(): Promise<void> {
     `,
   )
 
-  const parent = document.querySelector(`#LC${currentLine}.blob-code`)
-  if (!parent) return
-
-  parent.append(section)
-  parent.classList.add('highlighted')
-  parent.scrollIntoView({ behavior: 'auto', block: 'center' })
+  if ('directory' in currentStep) {
+    const parent = document.querySelector('div[role=rowheader]')
+    if (!parent) return
+    parent.append(section)
+    parent.scrollIntoView({ behavior: 'auto', block: 'center' })
+  } else if ('file' in currentStep) {
+    const currentLine = currentStep.line
+    const parent = document.querySelector(`#LC${currentLine}.blob-code`)
+    if (!parent) return
+    parent.append(section)
+    parent.classList.add('highlighted')
+    parent.scrollIntoView({ behavior: 'auto', block: 'center' })
+  }
 }
