@@ -18,6 +18,14 @@ function buttonTo(text: string, url?: string) {
   return `<a class="${classes}" style="margin-top: 10px;" href="${url || ''}">${text}</a>`
 }
 
+function getParent(currentStep: EnhancedCodeTourStep) {
+  if ('file' in currentStep) {
+    const currentLine = currentStep.line
+    return document.querySelector(`#LC${currentLine}.blob-code`)
+  }
+  return document.querySelector('div.repository-content')
+}
+
 export async function addCodeTour(): Promise<void> {
   const sheet = document.createElement('style')
   sheet.innerHTML = `
@@ -46,23 +54,21 @@ export async function addCodeTour(): Promise<void> {
   section.setAttribute(
     'style',
     `
-      padding: 14px;
-      margin: 14px;
-      background-color: white;
+    padding: 14px;
+    margin: 14px;
+    border: 1px lightgrey solid;
+    background-color: white;
+    border-radius: 1em;
     `,
   )
 
-  if ('directory' in currentStep) {
-    const parent = document.querySelector('div[role=rowheader]')
-    if (!parent) return
-    parent.append(section)
-    parent.scrollIntoView({ behavior: 'auto', block: 'center' })
-  } else if ('file' in currentStep) {
-    const currentLine = currentStep.line
-    const parent = document.querySelector(`#LC${currentLine}.blob-code`)
-    if (!parent) return
+  const parent = getParent(currentStep)
+  if (!parent) return
+  if ('file' in currentStep) {
     parent.append(section)
     parent.classList.add('highlighted')
     parent.scrollIntoView({ behavior: 'auto', block: 'center' })
+  } else {
+    parent.prepend(section)
   }
 }

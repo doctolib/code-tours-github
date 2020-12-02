@@ -1,0 +1,11 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "no file",
+  "steps": [
+    {
+      "title": "Introduction",
+      "description": "This step is not attached to anything"
+    }
+  ],
+  "ref": "cbf669f8894ddcdd6dc20026a8893932ddcdc19f"
+}
