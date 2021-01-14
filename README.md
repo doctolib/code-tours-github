@@ -1,12 +1,23 @@
 # Code Tours Github
 
-## To do
+## About
 
-- [x] Scroll for better visibility during code tours
-- [x] Firefox support
-- [x] Protect from XSS coming from code tour content
-- [ ] Edge support
-- [ ] Safari support
-- [ ] Check icon can be used
-- [ ] Design code tours
-- [ ] Support other default than "master"
+A browser extension that allows to play code tours directly from your Browser.
+You can download the extension for Chrome and Firefox here:
+
+[![Chrome](assets/chrome.png 'Chrome')](https://chrome.google.com/webstore/detail/code-tours-github/emmipndjppboloecpfgnckbkcehhhpkc)
+[![Firefox](assets/firefox.png 'Firefox')](https://addons.mozilla.org/en-US/firefox/addon/code-tours-github)
+
+## How it works
+
+You can just browse to a repository in Github, click on "Code Tours", and select
+the tour you want to play.
+
+Here is what it looks like:
+
+![](assets/codetour.gif)
+
+## Report issues
+
+If you experience a missing feature or a bug, please create an issue in this
+repository.
