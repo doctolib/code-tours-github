@@ -31,7 +31,7 @@ class CodeTourGenerator {
 
   // TODO real implementation
   private getDefaultRef() {
-    return this.body.ref || 'master'
+    return this.body.ref || 'main'
   }
 
   getStep(stepId: number): EnhancedCodeTourStep {
@@ -63,6 +63,9 @@ chrome.runtime.onMessage.addListener(function (
   sender: MessageSender,
   sendResponse: (answer: Response) => void,
 ): boolean {
+  if ('codeTour' in request) {
+    request.codeTour.title = request.codeTour.title.replace(/[^a-z0-9]/gi, '')
+  }
   switch (request.action) {
     case 'START':
       codeTourMap[request.codeTour.title] = new CodeTourGenerator(request.codeTour)

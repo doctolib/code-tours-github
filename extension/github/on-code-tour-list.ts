@@ -18,8 +18,11 @@ interface Operation {
 export function onCodeTourList(): void {
   const currentRepositoryMatches = /^\/([^/]+\/[^/]+)\//.exec(window.location.pathname)
   if (!currentRepositoryMatches) return
+  const currentBranchMatches = /^\/[^/]+\/[^/]+\/tree\/([^/]+)\//.exec(window.location.pathname)
+  if (!currentBranchMatches) return
 
   const currentRepository = currentRepositoryMatches[1]
+  const currentBranch = currentBranchMatches[1]
 
   const insertPreparation = Array.from(
     document.querySelectorAll('div[role=row] > div[role="rowheader"] > span > a').values(),
@@ -36,13 +39,16 @@ export function onCodeTourList(): void {
 
         const codeTourUrl = href.replace('blob', 'raw')
         const response = await forwardRequest({ action: 'GET_CODE_TOUR', url: codeTourUrl })
-        console.log(response)
         if (response.action !== 'CODE_TOUR' || !response.codeTour) return undefined
 
         const tourContent: CodeTour = {
           ...response.codeTour,
           repository: currentRepository,
         } as CodeTour
+
+        if (!tourContent.ref) {
+          tourContent.ref = currentBranch
+        }
 
         const newChild = document.createElement('a')
         newChild.classList.add('btn')
@@ -58,7 +64,6 @@ export function onCodeTourList(): void {
           newChild,
         }
       } catch (error) {
-        console.log(error)
         // no code tour for you!
         return undefined
       }
