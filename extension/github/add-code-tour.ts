@@ -91,7 +91,6 @@ export async function addCodeTour(): Promise<void> {
 
   section.append(tourInfo, span, br, previousButton, nextButton)
 
-  // section.innerHTML = `<span>${currentDescription}</span><br/>${previousButton} ${nextButton}`
   section.setAttribute(
     'style',
     `
