@@ -13,9 +13,15 @@ async function getStep(title: string, step: number): Promise<EnhancedCodeTourSte
   return response.step
 }
 
-function buttonTo(text: string, url?: string) {
-  const classes = url ? 'btn' : 'btn disabled'
-  return `<a class="${classes}" style="margin-top: 10px;" href="${url || ''}">${text}</a>`
+function buttonTo(text: string, url?: string): Element {
+  const classes = url ? 'btn btn-primary' : 'btn btn-primary disabled'
+  const button = document.createElement('a')
+  button.setAttribute('class', classes)
+  button.setAttribute('style', 'margin-top: 10px; margin-right: 5px;')
+  button.setAttribute('href', url || '')
+  button.text = text
+
+  return button
 }
 
 function getParent(currentStep: EnhancedCodeTourStep) {
@@ -24,6 +30,31 @@ function getParent(currentStep: EnhancedCodeTourStep) {
     return document.querySelector(`#LC${currentLine}.blob-code`)
   }
   return document.querySelector('div.repository-content')
+}
+
+function formatAndSanitizeDescription(rawText: string): string {
+  return filterXSS(converter.makeHtml(rawText))
+}
+
+function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number) {
+  const titleRow = document.createElement('p')
+
+  const img = document.createElement('img')
+  img.setAttribute('src', chrome.extension.getURL('code-tour.png'))
+  img.setAttribute('style', 'height: 2em; margin-right: 1em;')
+
+  const codeTour = document.createElement('b')
+  codeTour.textContent = 'CodeTour'
+
+  const hr = document.createElement('hr')
+
+  const currentTourInfo = document.createElement('span')
+  currentTourInfo.textContent = ` Step ${stepNumber + 1} of ${currentStep.tour.steps.length} (${
+    currentStep.tour.title
+  })`
+
+  titleRow.append(img, codeTour, currentTourInfo, hr)
+  return titleRow
 }
 
 export async function addCodeTour(): Promise<void> {
@@ -43,14 +74,24 @@ export async function addCodeTour(): Promise<void> {
   if (!name) return
 
   const currentStep = await getStep(name, step)
-  const currentDescription = filterXSS(converter.makeHtml(currentStep.description))
+  const currentDescription = formatAndSanitizeDescription(currentStep.description)
+
   const previousButton = buttonTo('Previous', currentStep.previousUrl)
   const nextButton = buttonTo('Next', currentStep.nextUrl)
 
   const section = document.createElement('div')
   section.setAttribute('class', 'dl-doctolib-code-tour-comment')
 
-  section.innerHTML = `<span>${currentDescription}</span><br/>${previousButton} ${nextButton}`
+  const tourInfo = buildTitleRow(currentStep, step)
+
+  const span = document.createElement('span')
+  span.innerHTML = currentDescription
+
+  const br = document.createElement('br')
+
+  section.append(tourInfo, span, br, previousButton, nextButton)
+
+  // section.innerHTML = `<span>${currentDescription}</span><br/>${previousButton} ${nextButton}`
   section.setAttribute(
     'style',
     `
@@ -59,6 +100,7 @@ export async function addCodeTour(): Promise<void> {
     border: 1px lightgrey solid;
     background-color: white;
     border-radius: 1em;
+    font-family: sans-serif;
     `,
   )
 

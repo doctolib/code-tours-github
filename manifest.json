@@ -17,5 +17,6 @@
       "matches": ["https://github.com/*/*"],
       "js": ["github.js"]
     }
-  ]
+  ],
+  "web_accessible_resources": ["code-tour.png"]
 }
