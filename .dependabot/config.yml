@@ -1,0 +1,19 @@
+version: 1
+
+update_configs:
+  - package_manager: 'javascript'
+    update_schedule: 'live'
+    directory: '/'
+    target_branch: 'master'
+    allowed_updates:
+      - match:
+          update_type: 'all'
+          dependency_type: 'direct'
+      - match:
+          update_type: 'security'
+          dependency_type: 'indirect'
+    version_requirement_updates: 'auto'
+    default_assignees:
+      - 'qmenoret'
+    default_labels:
+      - 'dependencies'
