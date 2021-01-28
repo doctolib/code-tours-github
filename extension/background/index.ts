@@ -54,6 +54,7 @@ class CodeTourGenerator {
       ...requestedStep,
       nextUrl,
       previousUrl,
+      tour: this.body,
     }
   }
 }

@@ -14,6 +14,7 @@ export type CodeTourStep = CodeTourFileStep | CodeTourDirectoryStep
 export type EnhancedCodeTourStep = CodeTourStep & {
   nextUrl?: string
   previousUrl?: string
+  tour: CodeTour
 }
 
 export interface CodeTour {
