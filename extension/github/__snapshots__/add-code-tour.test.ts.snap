@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildSection renders properly the section when the next and previous URLs are not defined 1`] = `
+<div
+  class="dl-doctolib-code-tour-comment"
+  style="
+    padding: 14px;
+    margin: 14px;
+    border: 1px lightgrey solid;
+    background-color: white;
+    border-radius: 1em;
+    font-family: sans-serif;
+    "
+>
+  <p>
+    <img
+      src="extension-url/code-tour.png"
+      style="height: 2em; margin-right: 1em;"
+    />
+    <b>
+      CodeTour
+    </b>
+    <span>
+       Step 2 of 0 (The code tour title)
+    </span>
+    <hr />
+  </p>
+  <span>
+    <p>
+      code tour description
+    </p>
+  </span>
+  <br />
+  <a
+    class="btn btn-primary disabled"
+    href=""
+    style="margin-top: 10px; margin-right: 5px;"
+  >
+    Previous
+  </a>
+  <a
+    class="btn btn-primary disabled"
+    href=""
+    style="margin-top: 10px; margin-right: 5px;"
+  >
+    Next
+  </a>
+</div>
+`;
+
+exports[`buildSection renders properly the whole section 1`] = `
+<div
+  class="dl-doctolib-code-tour-comment"
+  style="
+    padding: 14px;
+    margin: 14px;
+    border: 1px lightgrey solid;
+    background-color: white;
+    border-radius: 1em;
+    font-family: sans-serif;
+    "
+>
+  <p>
+    <img
+      src="extension-url/code-tour.png"
+      style="height: 2em; margin-right: 1em;"
+    />
+    <b>
+      CodeTour
+    </b>
+    <span>
+       Step 2 of 0 (The code tour title)
+    </span>
+    <hr />
+  </p>
+  <span>
+    <p>
+      code tour description
+    </p>
+  </span>
+  <br />
+  <a
+    class="btn btn-primary"
+    href="the/next/url?with=params"
+    style="margin-top: 10px; margin-right: 5px;"
+  >
+    Previous
+  </a>
+  <a
+    class="btn btn-primary"
+    href="the/next/url?with=params"
+    style="margin-top: 10px; margin-right: 5px;"
+  >
+    Next
+  </a>
+</div>
+`;
+
+exports[`buildTitleRow renders properly the code tour header 1`] = `
+<p>
+  <img
+    src="extension-url/code-tour.png"
+    style="height: 2em; margin-right: 1em;"
+  />
+  <b>
+    CodeTour
+  </b>
+  <span>
+     Step 2 of 0 (The code tour title)
+  </span>
+  <hr />
+</p>
+`;
+
+exports[`getParent returns the line of the file for a file step 1`] = `
+<div
+  class="blob-code"
+  id="LC42"
+>
+  
+    
+</div>
+`;
+
+exports[`getParent returns the top of the file for step with no file associated 1`] = `
+<div
+  class="repository-content"
+>
+  
+    
+</div>
+`;

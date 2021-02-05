@@ -4,7 +4,9 @@
   "scripts": {
     "build": "webpack --config webpack.config.js && cp manifest.json code-tour.png built/",
     "package": "(cd built ; zip -r ../extension.zip .)",
-    "clean": "rimraf built"
+    "clean": "rimraf built",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "showdown": "^1.9.1",
@@ -12,16 +14,22 @@
     "xss": "^1.0.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-typescript": "^7.12.13",
     "@types/chrome": "^0.0.129",
+    "@types/jest": "^26.0.20",
     "@types/showdown": "^1.9.3",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
+    "babel-jest": "^26.6.3",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "husky": "^4.3.8",
+    "jest": "^26.6.3",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",

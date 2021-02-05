@@ -24,7 +24,7 @@ function buttonTo(text: string, url?: string): Element {
   return button
 }
 
-function getParent(currentStep: EnhancedCodeTourStep) {
+export function getParent(currentStep: EnhancedCodeTourStep): Element | null {
   if ('file' in currentStep) {
     const currentLine = currentStep.line
     return document.querySelector(`#LC${currentLine}.blob-code`)
@@ -36,7 +36,7 @@ function formatAndSanitizeDescription(rawText: string): string {
   return filterXSS(converter.makeHtml(rawText))
 }
 
-function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number) {
+export function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number): HTMLParagraphElement {
   const titleRow = document.createElement('p')
 
   const img = document.createElement('img')
@@ -57,23 +57,7 @@ function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number) {
   return titleRow
 }
 
-export async function addCodeTour(): Promise<void> {
-  const sheet = document.createElement('style')
-  sheet.innerHTML = `
-  pre {
-    border: 1px black solid;
-    padding: 1em;
-  }
-  `
-  document.body.prepend(sheet)
-
-  const searchParams = new URLSearchParams(window.location.search)
-  const name = searchParams.get('code-tour')
-  const step = parseInt(searchParams.get('step') ?? '', 10) || 0
-
-  if (!name) return
-
-  const currentStep = await getStep(name, step)
+export function buildSection(currentStep: EnhancedCodeTourStep, step: number): HTMLDivElement {
   const currentDescription = formatAndSanitizeDescription(currentStep.description)
 
   const previousButton = buttonTo('Previous', currentStep.previousUrl)
@@ -102,6 +86,27 @@ export async function addCodeTour(): Promise<void> {
     font-family: sans-serif;
     `,
   )
+  return section
+}
+
+export async function addCodeTour(): Promise<void> {
+  const sheet = document.createElement('style')
+  sheet.innerHTML = `
+  pre {
+    border: 1px black solid;
+    padding: 1em;
+  }
+  `
+  document.body.prepend(sheet)
+
+  const searchParams = new URLSearchParams(window.location.search)
+  const name = searchParams.get('code-tour')
+  const step = parseInt(searchParams.get('step') ?? '', 10) || 0
+
+  if (!name) return
+
+  const currentStep = await getStep(name, step)
+  const section = buildSection(currentStep, step)
 
   const parent = getParent(currentStep)
   if (!parent) return
