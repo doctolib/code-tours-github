@@ -58,6 +58,8 @@ function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number) {
 }
 
 export async function addCodeTour(): Promise<void> {
+  // Prevent displaying the code tour twice
+  if (document.querySelector('.code-tour-comment')) return
   const sheet = document.createElement('style')
   sheet.innerHTML = `
   pre {
@@ -80,7 +82,7 @@ export async function addCodeTour(): Promise<void> {
   const nextButton = buttonTo('Next', currentStep.nextUrl)
 
   const section = document.createElement('div')
-  section.setAttribute('class', 'dl-doctolib-code-tour-comment')
+  section.setAttribute('class', 'code-tour-comment')
 
   const tourInfo = buildTitleRow(currentStep, step)
 

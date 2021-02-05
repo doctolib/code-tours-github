@@ -24,6 +24,9 @@ export function onCodeTourList(): void {
   const currentRepository = currentRepositoryMatches[1]
   const currentBranch = currentBranchMatches[1]
 
+  // Prevent displaying the buttons twice
+  if (document.querySelector('.code-tour-start')) return
+
   const insertPreparation = Array.from(
     document.querySelectorAll('div[role=row] > div[role="rowheader"] > span > a').values(),
   ).map(
@@ -52,6 +55,7 @@ export function onCodeTourList(): void {
 
         const newChild = document.createElement('a')
         newChild.classList.add('btn')
+        newChild.classList.add('code-tour-start')
         newChild.innerHTML = `Learn ${prettyName}`
         newChild.onclick = async () => {
           const result = await forwardRequest({ action: 'START', codeTour: tourContent })
@@ -71,6 +75,8 @@ export function onCodeTourList(): void {
   )
 
   void Promise.all(insertPreparation).then((operations) => {
+    // Prevent displaying the buttons twice
+    if (document.querySelector('.code-tour-start')) return
     operations.forEach((operation) => {
       if (!operation) return
       const { newChild, row } = operation

@@ -2,11 +2,14 @@ export function onMainPage(): void {
   const node = document.querySelector('a[href$="/.tours"]')
   if (!node) return
 
+  if (document.querySelector('.code-tour-access')) return
+
   const codeTourFolderUrl = node.getAttribute('href')
   if (!codeTourFolderUrl) return
 
   const codeTourButton = document.createElement('a')
   codeTourButton.classList.add('btn')
+  codeTourButton.classList.add('code-tour-access')
   codeTourButton.classList.add('ml-2')
   codeTourButton.classList.add('d-none')
   codeTourButton.classList.add('d-md-block')
