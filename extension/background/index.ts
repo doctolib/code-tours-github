@@ -15,17 +15,17 @@ class CodeTourGenerator {
     if ('file' in newStep && newStep.file) {
       return `http://github.com/${this.body.repository}/blob/${this.getDefaultRef()}/${
         newStep.file
-      }?step=${step}&code-tour=${this.body.title}`
+      }?step=${step}&code-tour=${this.body.slang}`
     }
 
     if ('directory' in newStep && newStep.directory) {
       return `http://github.com/${this.body.repository}/tree/${this.getDefaultRef()}/${
         newStep.directory
-      }?step=${step}&code-tour=${this.body.title}`
+      }?step=${step}&code-tour=${this.body.slang}`
     }
 
     return `http://github.com/${this.body.repository}/tree/${this.getDefaultRef()}/?step=${step}&code-tour=${
-      this.body.title
+      this.body.slang
     }`
   }
 
@@ -65,17 +65,17 @@ chrome.runtime.onMessage.addListener(function (
   sendResponse: (answer: Response) => void,
 ): boolean {
   if ('codeTour' in request) {
-    request.codeTour.title = request.codeTour.title.replace(/[^a-z0-9]/gi, '')
+    request.codeTour.slang = request.codeTour.title.replace(/[^a-z0-9]/gi, '')
   }
   switch (request.action) {
     case 'START':
-      codeTourMap[request.codeTour.title] = new CodeTourGenerator(request.codeTour)
-      sendResponse({ action: 'REDIRECT', url: codeTourMap[request.codeTour.title].goTo(0) })
+      codeTourMap[request.codeTour.slang] = new CodeTourGenerator(request.codeTour)
+      sendResponse({ action: 'REDIRECT', url: codeTourMap[request.codeTour.slang].goTo(0) })
       break
     case 'GO_TO':
-      if (!codeTourMap[request.codeTour.title]) return false
+      if (!codeTourMap[request.codeTour.slang]) return false
       if (!request.codeTour.step) return false
-      sendResponse({ action: 'REDIRECT', url: codeTourMap[request.codeTour.title].goTo(request.codeTour.step) })
+      sendResponse({ action: 'REDIRECT', url: codeTourMap[request.codeTour.slang].goTo(request.codeTour.step) })
       break
     case 'GET_STEP': {
       const step = codeTourMap[request.codeTourTitle]?.getStep(request.codeTourStep)

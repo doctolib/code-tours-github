@@ -19,6 +19,7 @@ export type EnhancedCodeTourStep = CodeTourStep & {
 
 export interface CodeTour {
   title: string
+  slang: string
   step: number
   steps: CodeTourStep[]
   ref: string
