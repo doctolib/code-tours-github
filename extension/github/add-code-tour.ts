@@ -49,7 +49,6 @@ function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number) {
   const hr = document.createElement('hr')
 
   const currentTourInfo = document.createElement('span')
-  console.log(currentStep.tour)
   currentTourInfo.textContent = ` Step ${stepNumber + 1} of ${currentStep.tour.steps.length} (${
     currentStep.tour.title
   })`
