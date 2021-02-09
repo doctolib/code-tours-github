@@ -2,7 +2,7 @@ version: 1
 
 update_configs:
   - package_manager: 'javascript'
-    update_schedule: 'live'
+    update_schedule: 'weekly'
     directory: '/'
     target_branch: 'main'
     allowed_updates:
