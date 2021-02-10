@@ -38,6 +38,7 @@ function formatAndSanitizeDescription(rawText: string): string {
 
 export function buildTitleRow(currentStep: EnhancedCodeTourStep, stepNumber: number): HTMLParagraphElement {
   const titleRow = document.createElement('p')
+  titleRow.setAttribute('style', 'display: flex; align-items: center;')
 
   const img = document.createElement('img')
   img.setAttribute('src', chrome.extension.getURL('code-tour.png'))
