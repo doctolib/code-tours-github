@@ -12,7 +12,9 @@ exports[`buildSection renders properly the section when the next and previous UR
     font-family: sans-serif;
     "
 >
-  <p>
+  <p
+    style="display: flex; align-items: center;"
+  >
     <img
       src="extension-url/code-tour.png"
       style="height: 2em; margin-right: 1em;"
@@ -60,7 +62,9 @@ exports[`buildSection renders properly the whole section 1`] = `
     font-family: sans-serif;
     "
 >
-  <p>
+  <p
+    style="display: flex; align-items: center;"
+  >
     <img
       src="extension-url/code-tour.png"
       style="height: 2em; margin-right: 1em;"
@@ -97,7 +101,9 @@ exports[`buildSection renders properly the whole section 1`] = `
 `;
 
 exports[`buildTitleRow renders properly the code tour header 1`] = `
-<p>
+<p
+  style="display: flex; align-items: center;"
+>
   <img
     src="extension-url/code-tour.png"
     style="height: 2em; margin-right: 1em;"
