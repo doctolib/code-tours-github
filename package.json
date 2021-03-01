@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-env": "^7.13.8",
     "@babel/preset-typescript": "^7.12.13",
     "@types/chrome": "^0.0.129",
     "@types/jest": "^26.0.20",
