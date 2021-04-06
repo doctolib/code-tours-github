@@ -24,10 +24,31 @@ function buttonTo(text: string, url?: string): Element {
   return button
 }
 
+function getCodeLineDOM(currentLine: number) {
+  return document.querySelector(`#LC${currentLine}.blob-code`)
+}
+
+export function highlightRows(step: EnhancedCodeTourStep): void {
+  if (!('file' in step)) return
+
+  const startLine = step.selection?.start.line ?? step.line
+  const endLine = step.selection?.end.line ?? step.line
+
+  if (startLine && endLine) {
+    for (let codeLine = startLine; codeLine <= endLine; codeLine += 1) {
+      const node = getCodeLineDOM(codeLine)
+      node?.classList.add('highlighted')
+    }
+  }
+}
+
 export function getParent(currentStep: EnhancedCodeTourStep): Element | null {
   if ('file' in currentStep) {
-    const currentLine = currentStep.line
-    return document.querySelector(`#LC${currentLine}.blob-code`)
+    const currentLine = currentStep.line ?? currentStep.selection?.end.line
+
+    if (currentLine) {
+      return getCodeLineDOM(currentLine)
+    }
   }
   return document.querySelector('div.repository-content')
 }
@@ -112,8 +133,9 @@ export async function addCodeTour(): Promise<void> {
   const parent = getParent(currentStep)
   if (!parent) return
   if ('file' in currentStep) {
+    highlightRows(currentStep)
+
     parent.append(section)
-    parent.classList.add('highlighted')
     parent.scrollIntoView({ behavior: 'auto', block: 'center' })
   } else {
     parent.prepend(section)
