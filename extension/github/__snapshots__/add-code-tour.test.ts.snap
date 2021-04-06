@@ -118,6 +118,16 @@ exports[`buildTitleRow renders properly the code tour header 1`] = `
 </p>
 `;
 
+exports[`getParent fallbacks to step selection when step line is missing 1`] = `
+<div
+  class="blob-code"
+  id="LC20"
+>
+  
+      
+</div>
+`;
+
 exports[`getParent returns the line of the file for a file step 1`] = `
 <div
   class="blob-code"
