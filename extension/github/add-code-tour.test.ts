@@ -1,4 +1,4 @@
-import { buildSection, buildTitleRow, getParent } from './add-code-tour'
+import { buildSection, buildTitleRow, getParent, highlightRows } from './add-code-tour'
 
 global.chrome = {
   // @ts-expect-error mocking the chrome API in tests
@@ -19,6 +19,7 @@ describe(buildTitleRow, () => {
           previousUrl: 'the/next/url?with=params',
           tour: {
             title: 'The code tour title',
+            slang: 'Thecodetourtitle',
             step: 3,
             steps: [],
             ref: 'alongcommitid',
@@ -43,6 +44,7 @@ describe(buildSection, () => {
           previousUrl: 'the/next/url?with=params',
           tour: {
             title: 'The code tour title',
+            slang: 'Thecodetourtitle',
             step: 3,
             steps: [],
             ref: 'alongcommitid',
@@ -63,6 +65,7 @@ describe(buildSection, () => {
           file: '/package.json',
           tour: {
             title: 'The code tour title',
+            slang: 'Thecodetourtitle',
             step: 3,
             steps: [],
             ref: 'alongcommitid',
@@ -87,6 +90,7 @@ describe(getParent, () => {
         file: '/package.json',
         tour: {
           title: 'The code tour title',
+          slang: 'Thecodetourtitle',
           step: 3,
           steps: [],
           ref: 'alongcommitid',
@@ -106,6 +110,7 @@ describe(getParent, () => {
         directory: 'the directory',
         tour: {
           title: 'The code tour title',
+          slang: 'Thecodetourtitle',
           step: 3,
           steps: [],
           ref: 'alongcommitid',
@@ -113,5 +118,94 @@ describe(getParent, () => {
         },
       }),
     ).toMatchSnapshot()
+  })
+
+  it('fallbacks to step selection when step line is missing', () => {
+    document.body.innerHTML = `
+       <div id="LC20" class="blob-code" />
+      `
+
+    expect(
+      getParent({
+        description: 'code tour description',
+        line: undefined,
+        selection: {
+          start: {
+            line: 10,
+            character: 7,
+          },
+          end: { line: 20, character: 7 },
+        },
+        file: '/package.json',
+        tour: {
+          title: 'The code tour title',
+          slang: 'Thecodetourtitle',
+          step: 3,
+          steps: [],
+          ref: 'alongcommitid',
+          repository: 'doctolib/code-tours-github',
+        },
+      }),
+    ).toMatchSnapshot()
+  })
+})
+
+describe(highlightRows, () => {
+  it('renders multiple highlighted code rows', () => {
+    document.body.innerHTML = `
+       <div id="LC20" class="blob-code" />
+       <div id="LC21" class="blob-code" />
+       <div id="LC22" class="blob-code" />
+      `
+
+    highlightRows({
+      description: 'code tour description',
+      line: undefined,
+      selection: {
+        start: {
+          line: 20,
+          character: 7,
+        },
+        end: { line: 21, character: 7 },
+      },
+      file: '/package.json',
+      tour: {
+        title: 'The code tour title',
+        slang: 'Thecodetourtitle',
+        step: 3,
+        steps: [],
+        ref: 'alongcommitid',
+        repository: 'doctolib/code-tours-github',
+      },
+    })
+
+    expect(document.querySelector('#LC20')?.classList.contains('highlighted')).toBe(true)
+    expect(document.querySelector('#LC21')?.classList.contains('highlighted')).toBe(true)
+    expect(document.querySelector('#LC22')?.classList.contains('highlighted')).toBe(false)
+  })
+
+  it('renders one highlighted code row', () => {
+    document.body.innerHTML = `
+       <div id="LC20" class="blob-code" />
+       <div id="LC21" class="blob-code" />
+      `
+
+    highlightRows({
+      description: 'code tour description',
+      line: 21,
+      selection: undefined,
+      file: '/package.json',
+      tour: {
+        title: 'The code tour title',
+        slang: 'Thecodetourtitle',
+        step: 3,
+        steps: [],
+        ref: 'alongcommitid',
+        repository: 'doctolib/code-tours-github',
+      },
+    })
+
+    expect(document.querySelector('#LC20')?.classList.contains('highlighted')).toBe(false)
+    expect(document.querySelector('#LC21')?.classList.contains('highlighted')).toBe(true)
   })
 })
