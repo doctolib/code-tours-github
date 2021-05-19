@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "01:00"
+  pull-request-branch-name:
+    separator: "-"
+  open-pull-requests-limit: 99
+  target-branch: main
+  assignees:
+  - qmenoret
+  labels:
+  - dependencies
