@@ -11,7 +11,7 @@
   "dependencies": {
     "showdown": "^1.9.1",
     "showdown-prettify": "^1.3.0",
-    "xss": "^1.0.8"
+    "xss": "^1.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.14.2",
