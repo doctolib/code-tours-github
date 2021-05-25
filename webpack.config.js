@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     background: path.join(__dirname, 'extension', 'background', 'index.ts'),
     github: path.join(__dirname, 'extension', 'github', 'index.ts'),
+    gitlab: path.join(__dirname, 'extension', 'gitlab', 'index.ts'),
   },
   output: {
     path: path.join(__dirname, 'built'),

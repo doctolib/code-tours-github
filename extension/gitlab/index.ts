@@ -23,7 +23,8 @@ function getPageType(): PageType {
 }
 
 function main(): void {
-  if (window.location.hostname !== 'github.com') return
+  if (window.location.hostname !== 'gitlab.com') return
+  console.log(getPageType())
   switch (getPageType()) {
     case PageType.RepositoryMainPage: {
       return onMainPage()
@@ -39,4 +40,4 @@ function main(): void {
   return undefined
 }
 
-setTimeout(main, 1000)
+setTimeout(main, 2000)

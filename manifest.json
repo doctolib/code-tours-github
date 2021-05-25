@@ -16,6 +16,11 @@
       "run_at": "document_start",
       "matches": ["https://github.com/*/*"],
       "js": ["github.js"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://gitlab.com/*/*"],
+      "js": ["gitlab.js"]
     }
   ],
   "web_accessible_resources": ["code-tour.png"]
