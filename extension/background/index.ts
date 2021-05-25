@@ -1,6 +1,7 @@
 import { Request } from '../types/request'
 import { Response } from '../types/response'
 import { CodeTour, EnhancedCodeTourStep } from '../types/code-tour'
+import { Actions, BackgroundMessage } from '../types/background-messages'
 import MessageSender = chrome.runtime.MessageSender
 
 const codeTourMap: Record<string, CodeTourGenerator> = {}
@@ -91,4 +92,13 @@ chrome.runtime.onMessage.addListener(function (
     }
   }
   return false
+})
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.url) {
+    const message: BackgroundMessage = {
+      action: Actions.UrlChanged,
+    }
+    chrome.tabs.sendMessage(tabId, message)
+  }
 })

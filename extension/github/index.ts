@@ -1,6 +1,7 @@
 import { onMainPage } from './on-main-page'
 import { onCodeTourList } from './on-code-tour-list'
 import { addCodeTour } from './add-code-tour'
+import { Actions, BackgroundMessage } from '../types/background-messages'
 
 enum PageType {
   NoWhere,
@@ -38,4 +39,12 @@ function main(): void {
   return undefined
 }
 
-setTimeout(main, 1000)
+document.addEventListener('DOMContentLoaded', () => {
+  main()
+})
+
+chrome.runtime.onMessage.addListener(function (request: BackgroundMessage) {
+  if (request.action === Actions.UrlChanged) {
+    setTimeout(main, 1000)
+  }
+})

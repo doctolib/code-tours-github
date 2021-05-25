@@ -86,7 +86,7 @@ export function buildSection(currentStep: EnhancedCodeTourStep, step: number): H
   const nextButton = buttonTo('Next', currentStep.nextUrl)
 
   const section = document.createElement('div')
-  section.setAttribute('class', 'dl-doctolib-code-tour-comment')
+  section.setAttribute('class', 'code-tour-comment')
 
   const tourInfo = buildTitleRow(currentStep, step)
 
@@ -112,6 +112,8 @@ export function buildSection(currentStep: EnhancedCodeTourStep, step: number): H
 }
 
 export async function addCodeTour(): Promise<void> {
+  // Prevent displaying the code tour twice
+  if (document.querySelector('.code-tour-comment')) return
   const sheet = document.createElement('style')
   sheet.innerHTML = `
   pre {

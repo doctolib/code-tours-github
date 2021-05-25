@@ -2,7 +2,7 @@
 
 exports[`buildSection renders properly the section when the next and previous URLs are not defined 1`] = `
 <div
-  class="dl-doctolib-code-tour-comment"
+  class="code-tour-comment"
   style="
     padding: 14px;
     margin: 14px;
@@ -52,7 +52,7 @@ exports[`buildSection renders properly the section when the next and previous UR
 
 exports[`buildSection renders properly the whole section 1`] = `
 <div
-  class="dl-doctolib-code-tour-comment"
+  class="code-tour-comment"
   style="
     padding: 14px;
     margin: 14px;
