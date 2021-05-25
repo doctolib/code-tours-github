@@ -1,7 +1,16 @@
+interface CodeTourStepPosition {
+  line: number
+  character: number
+}
+
 interface CodeTourFileStep {
   description: string
   file: string
-  line: number
+  line?: number
+  selection?: {
+    start: CodeTourStepPosition
+    end: CodeTourStepPosition
+  }
 }
 
 export interface CodeTourDirectoryStep {
@@ -19,6 +28,7 @@ export type EnhancedCodeTourStep = CodeTourStep & {
 
 export interface CodeTour {
   title: string
+  slang: string
   step: number
   steps: CodeTourStep[]
   ref: string

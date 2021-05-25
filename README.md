@@ -2,7 +2,7 @@
 
 ## About
 
-A browser extension that allows to play code tours directly from your Browser.
+A browser extension that allows to play [code tours](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour) (guided walkthroughs of your codebase) directly from your Browser.
 You can download the extension for Chrome and Firefox here:
 
 [![Chrome](assets/chrome.png 'Chrome')](https://chrome.google.com/webstore/detail/code-tours-github/emmipndjppboloecpfgnckbkcehhhpkc)
