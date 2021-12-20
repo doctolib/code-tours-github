@@ -1287,10 +1287,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/chrome@^0.0.141":
-  version "0.0.141"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.141.tgz#337648651a2b75a74bf3038680dc0e47ddd75d07"
-  integrity sha512-0bYsCxGKo9xdrNHiqWRjPVygDRfKA2EczhXJmKjkfBF+KQc0BFKejtdFV28ygcVH3RTjGZ+ccoJ3bb8wKFacbw==
+"@types/chrome@^0.0.171":
+  version "0.0.171"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.171.tgz#6ee9aca52fabbe645372088fcc86b33cff33fcba"
+  integrity sha512-CnCwFKI3COygib3DNJrCjePeoU2OCDGGbUcmftXtQ3loMABsLgwpG8z+LxV4kjQJFzmJDqOyhCSsbY9yyEfapQ==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
